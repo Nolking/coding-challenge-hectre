@@ -1,0 +1,14 @@
+.menu-bar {height: 100%; width: 68px; position: absolute; left: 0px; background: #DF1D00;}
+.menu-bar .menu-bar-icon-wrapper {height: 46px; width: 100%; padding-top: 12px; }
+.menu-bar .menu-bar-icon-wrapper .menu-bar-icon {height: 48px; width: 100%; display: inline-block}
+.menu-bar .menu-bar-icon-wrapper .menu-bar-icon.chemical-icon {background: url('./assets/Chemical_white_ic.svg') no-repeat center #DF1D00;}
+.menu-bar .menu-bar-icon-wrapper .menu-bar-icon.chemical-icon.active {background: url('./assets/Chemical_ic.svg') no-repeat center white;}
+
+.menu-bar .menu-bar-icon-wrapper .menu-bar-icon.report-icon {background: url('./assets/Report_white_ic.svg') no-repeat center #DF1D00;}
+.menu-bar .menu-bar-icon-wrapper .menu-bar-icon.report-icon.active {background: url('./assets/Report_ic.svg') no-repeat center white;}
+
+.main-page-content {position: fixed; top: 64px; left: 68px; bottom:0; right: 0px; background: #E5E5E5; padding: 12px 12px 0 12px;}
+
+.MuiTableContainer-root {padding: 6px;}
+.table-head-info-row {border-bottom: 2px solid #DF1D00;}
+.table-head-info-row th {border-bottom: 0px;}

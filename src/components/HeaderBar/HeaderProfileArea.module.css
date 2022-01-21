@@ -1,0 +1,7 @@
+.ProfileArea {float:right; margin-right: 50px; height: 100%; padding: 16px 0; display: inline-flex;}
+.ProfileNameAndRole {height: 100%; display: inline-block}
+.ProfileNameAndRole b {height: 50%; display: block; line-height: 16px;}
+.ProfileUserName {font-weight: 600; font-size: 16px; font-family: Lato; text-align: left;}
+.ProfileUserRole {font-weight: 400; font-family: Lato; font-size: 12px; text-align: left; color: #BDBDBD;
+}
+.Dropdown_Icon {width: 12px; height:100%; flex: 0 0 12px; display: inline-flex; margin-left: 10px;}
