@@ -1,13 +1,14 @@
 // import './App.css';
 import React from "react"
-import logo from "../../assets/Hectre_Logo.svg"
 import HeaderProfileArea from "./HeaderProfileArea";
 import classes from "./HeaderBar.module.css"
+import {NavLink} from 'react-router-dom'
 
 function HeaderBar(props) {
   return (
       <header className={classes['headerBar']}>
-        <img src={logo} className={classes.HectreLogo} alt="logo" />
+        <NavLink className={classes.HectreLogo} to={'/'}>
+                </NavLink>
         <HeaderProfileArea name="Yi Wan" role="supervisor"></HeaderProfileArea>
       </header>
   );

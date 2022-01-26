@@ -16,7 +16,6 @@ export default function HeaderProfileArea(props) {
                 <b className={classes.ProfileUserRole}>{role}</b>
             </div>
             <img src={icon} className={classes.Dropdown_Icon} alt="icon" />
-            <p>Sign in</p>
         </div>
     );
 }

@@ -7,8 +7,45 @@
 .menu-bar .menu-bar-icon-wrapper .menu-bar-icon.report-icon {background: url('./assets/Report_white_ic.svg') no-repeat center #DF1D00;}
 .menu-bar .menu-bar-icon-wrapper .menu-bar-icon.report-icon.active {background: url('./assets/Report_ic.svg') no-repeat center white;}
 
-.main-page-content {position: fixed; top: 64px; left: 68px; bottom:0; right: 0px; background: #E5E5E5; padding: 12px 12px 0 12px;}
+.main-page-content__main-card {padding: 6px; background: white; height: 100%; border-radius: 4px;}
+.ant-table {height: 615px; overflow: auto;}
+.table-info-row {height: 70px;border-width: 0 !important; border-bottom: 3px solid #DF1D00 !important;}
+.table-info-row .ant-card-body { padding: 0 34px !important; height: 100%;}
+.table-info-row h1 {width: auto; float: left; margin: 0 0 0 40px; display: inline-block; line-height: 70px;}
+.table-info-total-items {display: inline-block; float: left; line-height: 70px; margin-left: 18px; color: #828282;}
+.table-info-add-chemical { float :right; display: inline-block; font-weight: bold; line-height: 70px; color: #DF1D00;}
 
-.MuiTableContainer-root {padding: 6px;}
-.table-head-info-row {border-bottom: 2px solid #DF1D00;}
-.table-head-info-row th {border-bottom: 0px;}
+.ant-table-pagination .ant-pagination-item-link,.ant-pagination-item {border-radius: 4px !important;}
+.ant-table-pagination .ant-pagination-item-active {border-color: #DF1D00; }
+.ant-table-pagination .ant-pagination-item-active a {color: #DF1D00; }
+.ant-table-pagination .ant-pagination-item-link:hover,.ant-pagination-item:hover {border-color: #DF1D00 !important} 
+.ant-table-pagination .ant-pagination-item:hover a {color: #DF1D00;}
+.ant-table-pagination .ant-pagination-item-link:hover svg {fill: #DF1D00;}
+.ant-pagination-disabled {pointer-events: none;}
+.ant-table-wrapper {padding: 0 34px; position: relative; top: -6px;}
+.ant-table-thead .ant-table-cell::before {display: none;}
+.ant-table-thead .ant-table-cell {background: white; font-size: 16px; font-weight: 700; color: #333333}
+.ant-table-tbody .ant-table-row .ant-table-cell { color: #333333; font-weight: 400; font-size: 16px;}
+.ant-table-tbody .ant-table-row:nth-child(2n) .ant-table-cell {background: #F9F9F9}
+.ant-table-cell {padding: 16px 40px !important;}
+.main-page-content {position: fixed; top: 64px; left: 68px; bottom:0; right: 0px; background: #E5E5E5; padding: 12px 12px 12px 12px;}
+
+.ant-card .ant-card-head-title { flex: none; font-size: 24px; font-weight: 600; color: #333333;}
+.card-report-title {border-top: 3px solid #DF1D00 !important; font-size: 16px; font-weight: 400; color: #828282;}
+.card-report-detail {font-size: 36px; font-weight: 700; color: #333333}
+.login-page-card {height: 100%;}
+.main-card {
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+.percentage-card {padding: 0 20px 20px !important;}
+.percentage-card .ant-card-head {border-bottom: 0px; height: 80px; padding: 0 16px;}
+.percentage-card .ant-card-body {padding: 0px 16px !important}
+.ant-tabs-nav::before {border-bottom: 0px !important;}
+.ant-tabs-nav-wrap {height: 30px;}
+.ant-tabs-tab + .ant-tabs-tab {margin: 0 0 0 40px !important;}
+.ant-tabs-nav-list .ant-tabs-tab {font-weight: 400; font-size: 16px; color: #4F4F4F;}
+.ant-tabs-nav-list .ant-tabs-tab:hover {font-weight: 400; font-size: 16px; color: #4F4F4F;}
+.ant-tabs-nav-list .ant-tabs-tab:focus {font-weight: 400; font-size: 16px; color: #4F4F4F;}
+
+.ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {font-weight: 600; color: #333333 !important;}
+.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar {height: 3px; background: #DF1D00;}
