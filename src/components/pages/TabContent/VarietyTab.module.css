@@ -1,2 +1,4 @@
 .wrapper {display: flex; justify-content: center}
 .PieChart {display: inline-flex; flex: 0 0 25%; max-width: 25%; border: 0px !important;}
+.PieChart .chart-title {font-size: 13px; font-weight: 400}
+.PieChart .chart-title {font-size: 13px; font-weight: 600}

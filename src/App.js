@@ -23,17 +23,12 @@ function App() {
   }
   let authorizationHeaderString = ''
   function onLoadHandler(data) {
-    console.log('onload App runs')
-    console.log(data)
     setIsLoggedIn(data)
-    console.log('login status '+isLoggedIn)
     let str = window.location.href; 
     if (str.includes('callback')) {
       str = str.split('=');
       COGNITO_CONFIG.AUTHORIZATION_CODE = str[1];
       authorizationHeaderString = 'Basic '+ window.btoa(COGNITO_CONFIG.client_Id + ':' + COGNITO_CONFIG.client_secret)
-      // console.log(COGNITO_CONFIG.AUTHORIZATION_CODE)
-      
     }
   }
   fetchAccessToken(authorizationHeaderString);

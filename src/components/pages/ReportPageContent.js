@@ -25,19 +25,15 @@ export default function ReportPageContent(props) {
     let data = props.data;
     let OrchardList = props.OrchardList;
     let VarietyList = props.VarietyList;
-    console.log('report page')
+    let varietyParams = [];
     let displayData;
-    console.log('this is data')
-    console.log(data)
     filterDisplayData();
     function rangeChangeHandler(date, dateString) {
-        // console.log(rangeDateFilter)
         from = date[0];
         to = date[1];
         filterDisplayData();
     }
     function handleChange(value) {
-        console.log(`${value}`);
         filteredOrchard = value;
         filterDisplayData()
     }
@@ -54,11 +50,19 @@ export default function ReportPageContent(props) {
         if (filteredOrchard !== 'All') {
             displayData = displayData.filter(ele =>  ele.orchardId === getOrchardId(filteredOrchard))
         }
-        console.log('filter data')
-        console.log(displayData)
-        // setTotalReport(showReport());
         totalReport = showReport();
-        console.log(totalReport)
+        makeVarietyParams();
+    }
+    function makeVarietyParams() {
+        let i = 0;
+        displayData.forEach(el => {
+            varietyParams[i] = {}
+            varietyParams[i].numberOfBins = el.numberOfBins
+            varietyParams[i].hoursWorked = el.hoursWorked;
+            varietyParams[i].payRatePerHour = el.payRatePerHour;
+            varietyParams[i].name = VarietyList.filter(ele => el.varietyId === ele.id)[0].name;
+            i++;
+        })
     }
     function toCurrency(num) {
         return new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' }).format(num)
@@ -91,17 +95,17 @@ export default function ReportPageContent(props) {
         obj.totalStaff = numberFormat(totalStaff.length);
         return obj;
     }
-    // if (!props.isLoggedIn) {
-    //     console.log('report page log in status' + props.isLoggedIn)
-    // return (
-    //     <div className="main-page-content">
-    //         <div className="main-page-content__main-card">
-    //             <h1>You need to sign in to view this content !!!</h1>
-    //             <div><a href={COGNITO_CONFIG.SIGNIN_URL}>Sign in</a></div>
-    //         </div>
-    //     </div>
-    // )} else
-    //     {
+    if (!props.isLoggedIn) {
+        console.log('report page log in status' + props.isLoggedIn)
+    return (
+        <div className="main-page-content">
+            <div className="main-page-content__main-card">
+                <h1>You need to sign in to view this content !!!</h1>
+                <div><a href={COGNITO_CONFIG.SIGNIN_URL}>Sign in</a></div>
+            </div>
+        </div>
+    )} else
+        {
         return (
         <div className="main-page-content">
             <Card className="main-card" >
@@ -136,7 +140,7 @@ export default function ReportPageContent(props) {
             <Card className="percentage-card main-card" style={percentageCardStyles} title="Percentage">
             <Tabs defaultActiveKey="1" >
                 <TabPane tab="VARIETIES" key="1">
-                    <PieChart VarietyList={VarietyList}></PieChart>
+                    <PieChart params={varietyParams} VarietyList={VarietyList}></PieChart>
                 </TabPane>
                 <TabPane tab="ORCHARDS" key="2">
                     <PieChart VarietyList={VarietyList}></PieChart>
@@ -146,4 +150,4 @@ export default function ReportPageContent(props) {
             </Card>
         </div>
     )}
-// }
+}

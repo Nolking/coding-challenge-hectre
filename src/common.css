@@ -30,6 +30,12 @@
 .ant-table-cell {padding: 16px 40px !important;}
 .main-page-content {position: fixed; top: 64px; left: 68px; bottom:0; right: 0px; background: #E5E5E5; padding: 12px 12px 12px 12px;}
 
+.filter-area .ant-card-body {display: flex; justify-content: left; padding-left: 0px !important;}
+.filter-area .filter-icon {background: url('./assets/filter_ic.svg')no-repeat center; height: 48px; width: 48px; display: inline-flex; flex: 0 0 48px; padding: 15px;}
+.filter-area .ant-select {display: inline-flex; height: 48px;}
+.filter-area .ant-select .ant-select-selector {height: 48px !important; text-align: left !important;}
+.filter-area .ant-select .ant-select-selector .ant-select-selection-item {line-height: 48px;  }
+
 .ant-card .ant-card-head-title { flex: none; font-size: 24px; font-weight: 600; color: #333333;}
 .card-report-title {border-top: 3px solid #DF1D00 !important; font-size: 16px; font-weight: 400; color: #828282;}
 .card-report-detail {font-size: 36px; font-weight: 700; color: #333333}

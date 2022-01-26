@@ -12,9 +12,7 @@ export default function LoginPageContent(props) {
     }
     useEffect(()=> {
         setIsLoggedIn(props.isLoggedIn)
-        console.log('useEffect runs')
         onLoad(isLoggedIn)
-        // props.onLoad(isLoggedIn)
     }, [isLoggedIn, props])
     const logout_url="/signout"
     const logOutHandler = () => {
