@@ -8,7 +8,6 @@ import COGNITO_CONFIG from '../../configs/configs.js'
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TabPane } = Tabs;
-let totalReport = {};
 const gridStyle = {
     lineHeight: "70px", maxWidth: "calc(100%/6)", height: "70px", padding: "0", boxShadow:"none", textAlign: "center", background: "#F9F9F9"
 }
@@ -17,25 +16,64 @@ const percentageCardStyles = {
 }
 const dateFormat = 'DD/MM/YYYY';
 let rangeDateFilter =  [moment('01/07/2021', dateFormat),moment('31/10/2021', dateFormat)];
-let from = moment(rangeDateFilter[0]);
-let to = moment(rangeDateFilter[1]);
-let filteredOrchard = "All";
+// let from = moment(rangeDateFilter[0]);
+// let to = moment(rangeDateFilter[1]);
+// let filteredOrchard = "All";
 export default function ReportPageContent(props) {
-    let [totalReport, setTotalReport] = useState({});
+    let [from, setFrom] = useState(moment(rangeDateFilter[0]));
+    let [to, setTo] = useState(moment(rangeDateFilter[1]));
+    let [filteredOrchard, setFilteredOrchard] = useState('All');
+    let totalBins = 0;
+    let totalVarieties = []; 
+    let totalStaff = [];
+    let totalWorkingHours = 0;
+    let averageRate = 0;
+    let totalLaborCost = 0;
+    let [totalReport, setTotalReport] = useState({'totalBins': totalBins, 
+        'totalVarieties': totalVarieties, 'totalStaff': totalStaff,
+        'totalWorkingHours' : totalWorkingHours, 'totalLaborCost': totalLaborCost
+    })
+
     let data = props.data;
     let OrchardList = props.OrchardList;
     let VarietyList = props.VarietyList;
     let varietyParams = [];
     let displayData;
+    
     filterDisplayData();
+    useEffect(() => {
+        
+        for (let item of displayData) {
+            totalBins += item.numberOfBins;
+            totalWorkingHours = totalWorkingHours + item.hoursWorked;
+            totalLaborCost = totalLaborCost + parseFloat(item.hoursWorked)*parseFloat(item.payRatePerHour);
+            if (!totalStaff.includes(item.userId)) totalStaff.push(item.userId)
+            if (!totalVarieties.includes(item.varietyId)) totalVarieties.push(item.varietyId)
+        }
+        let obj = {}
+        averageRate = totalLaborCost/totalWorkingHours;
+
+        obj.totalBins = numberFormat(totalBins);
+        obj.totalWorkingHours = numberFormat(totalWorkingHours.toFixed(2));
+        obj.totalLaborCost = toCurrency(totalLaborCost.toFixed(2));
+        obj.averageRate = toCurrency(averageRate.toFixed(2));
+        obj.totalVarieties = numberFormat(totalVarieties.length);
+        obj.totalStaff = numberFormat(totalStaff.length);
+        setTotalReport(obj);
+        console.log('useEffect runs')
+        console.log(totalReport)
+      }, [from,to,filteredOrchard]);
     function rangeChangeHandler(date, dateString) {
-        from = date[0];
-        to = date[1];
+        setFrom(date[0]);
+        setTo(date[1]);
         filterDisplayData();
+        console.log(totalReport)
     }
     function handleChange(value) {
-        filteredOrchard = value;
+        setFilteredOrchard(value);
         filterDisplayData()
+        console.log(totalReport)
+
     }
     function getOrchardId(orchardName) {
         for (let orchard of OrchardList) {
@@ -43,14 +81,14 @@ export default function ReportPageContent(props) {
         }
     }
     function filterDisplayData() {
-        displayData = data;
-        displayData = displayData.filter(ele => 
+        // displayData = data;
+        displayData = data.filter(ele => 
             Date.parse(ele.pickingDate) < Date.parse(to) &&  Date.parse(ele.pickingDate) > Date.parse(from)
         )
         if (filteredOrchard !== 'All') {
             displayData = displayData.filter(ele =>  ele.orchardId === getOrchardId(filteredOrchard))
         }
-        totalReport = showReport();
+        // console.log(displayData)
         makeVarietyParams();
     }
     function makeVarietyParams() {
@@ -69,31 +107,6 @@ export default function ReportPageContent(props) {
     }
     function numberFormat(num) {
         return new Intl.NumberFormat('en-NZ').format(num);
-    }
-    function showReport() {
-        let totalBins = 0;
-        let totalVarieties = []; 
-        let totalStaff = [];
-        let totalWorkingHours = 0;
-        let averageRate = 0;
-        let totalLaborCost = 0;
-        for (let item of displayData) {
-            totalBins += item.numberOfBins;
-            totalWorkingHours = totalWorkingHours + item.hoursWorked;
-            totalLaborCost = totalLaborCost + parseFloat(item.hoursWorked)*parseFloat(item.payRatePerHour);
-            if (!totalStaff.includes(item.userId)) totalStaff.push(item.userId)
-            if (!totalVarieties.includes(item.varietyId)) totalVarieties.push(item.varietyId)
-        }
-        let obj = {}
-        averageRate = totalLaborCost/totalWorkingHours;
-
-        obj.totalBins = numberFormat(totalBins);
-        obj.totalWorkingHours = numberFormat(totalWorkingHours.toFixed(2));
-        obj.totalLaborCost = toCurrency(totalLaborCost.toFixed(2));
-        obj.averageRate = toCurrency(averageRate.toFixed(2));
-        obj.totalVarieties = numberFormat(totalVarieties.length);
-        obj.totalStaff = numberFormat(totalStaff.length);
-        return obj;
     }
     if (!props.isLoggedIn) {
         console.log('report page log in status' + props.isLoggedIn)

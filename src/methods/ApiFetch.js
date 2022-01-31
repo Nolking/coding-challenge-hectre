@@ -30,34 +30,25 @@ export default function fetchChemical(dataContent) {
         }
         });
 }
-export function fetchAccessToken(authorizationHeaderString) {
-    fetch('https://hectre-code-challenge.auth.ap-southeast-2.amazoncognito.com/oauth2/token', {
+export  function fetchAccessToken() {
+     fetch('https://hectre-code-challenge.auth.ap-southeast-2.amazoncognito.com/oauth2/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         }, 
-        body: {
-          'grant_type':'authorization_code',
-          'client_id':COGNITO_CONFIG.client_Id,
-          'redirect_uri':'http://localhost:4000/callback',
-          'code':COGNITO_CONFIG.AUTHORIZATION_CODE
-        }
+        body:  `client_id=${COGNITO_CONFIG.client_Id}&code=${COGNITO_CONFIG.AUTHORIZATION_CODE}&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A4000%2Fcallback`
         })
         .then((res) => {
           if (res.ok) {
             res.json().then((data) => {
                 console.log(data)
+                COGNITO_CONFIG.ACCESS_TOKEN = data.access_token;
+                console.log(COGNITO_CONFIG.AUTHORIZATION_CODE)
+                console.log('token fetched apifetch')
             })
           } else {
               res.json().then((data) => {
-                  console.log( {'grant_type':'authorization_code',
-                  'client_id':COGNITO_CONFIG.client_Id,
-                  'redirect_uri':'http://localhost:4000/callback',
-                  'code':COGNITO_CONFIG.AUTHORIZATION_CODE})
-                  console.log({
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization' : authorizationHeaderString
-                }, )
+                  console.log(data)
             //   let errorMessage = 'fetch failed';
             //   console.log(errorMessage);
               console.log(data)

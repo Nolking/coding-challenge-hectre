@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import HeaderBar from './components/HeaderBar/HeaderBar.js';
 import MenuBar from './components/MenuBar/MenuBar';
 import ChemicalPageContent from './components/pages/ChemicalPageContent';
@@ -14,6 +14,10 @@ import fetchChemical, { fetchAccessToken, fetchOrchards, fetchReportData, fetchV
 function App() {
   let [isLoggedIn, setIsLoggedIn] = useState(false);
   let dataContent= [];
+  useEffect(() => {
+    fetchApis();
+    
+  },[])
   fetchChemical(dataContent)
   const Pagination = {
     defaultPageSize:12,
@@ -21,20 +25,24 @@ function App() {
     pageSizeOption: [5,10,15],
     responsive: true,
   }
-  let authorizationHeaderString = ''
+  function fetchApis() {
+    fetchAccessToken();
+    console.log('token fetched');
+    console.log(COGNITO_CONFIG.ACCESS_TOKEN)
+    fetchReportData();
+    fetchOrchards();
+    fetchVarieties();
+  }
   function onLoadHandler(data) {
     setIsLoggedIn(data)
     let str = window.location.href; 
     if (str.includes('callback')) {
       str = str.split('=');
       COGNITO_CONFIG.AUTHORIZATION_CODE = str[1];
-      authorizationHeaderString = 'Basic '+ window.btoa(COGNITO_CONFIG.client_Id + ':' + COGNITO_CONFIG.client_secret)
     }
+   
   }
-  fetchAccessToken(authorizationHeaderString);
-  fetchReportData();
-  fetchOrchards();
-  fetchVarieties();
+  
   
  
   return (
