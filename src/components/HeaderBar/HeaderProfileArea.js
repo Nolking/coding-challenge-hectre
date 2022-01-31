@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classes from './HeaderProfileArea.module.css'
 import icon from "../../assets/Dropdown_ic.svg"
+import COGNITO_CONFIG from '../../configs/configs';
 
 
 export default function HeaderProfileArea(props) {
-    let name = props.name;
+    const [name, setName] = useState(props.name);
+
     let role = props.role;
+    if (props.isLoggedIn)
     return (
         <div className={classes.ProfileArea}>
             <svg height="32" width="64">
@@ -17,5 +20,5 @@ export default function HeaderProfileArea(props) {
             </div>
             <img src={icon} className={classes.Dropdown_Icon} alt="icon" />
         </div>
-    );
+    ); else return (<div className={classes.ProfileArea}><a href={COGNITO_CONFIG.SIGNIN_URL}>Sign in</a></div>)
 }

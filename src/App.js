@@ -8,15 +8,14 @@ import ChemicalPageContent from './components/pages/ChemicalPageContent';
 import ReportPageContent from './components/pages/ReportPageContent';
 import LoginPageContent from './components/login/Login';
 import COGNITO_CONFIG from './configs/configs.js'
-import { ReportData, OrchardList, VarietyList} from './data/TestData';
-import fetchChemical, { fetchAccessToken, fetchOrchards, fetchReportData, fetchVarieties } from './methods/ApiFetch';
+import { ReportData, OrchardList, VarietyList, UserInfo} from './data/TestData';
+import fetchChemical, { fetchAccessToken } from './methods/ApiFetch';
 
 function App() {
   let [isLoggedIn, setIsLoggedIn] = useState(false);
   let dataContent= [];
   useEffect(() => {
-    fetchApis();
-    
+    if (COGNITO_CONFIG.AUTHORIZATION_CODE !== '') fetchAccessToken();
   },[])
   fetchChemical(dataContent)
   const Pagination = {
@@ -25,14 +24,7 @@ function App() {
     pageSizeOption: [5,10,15],
     responsive: true,
   }
-  function fetchApis() {
-    fetchAccessToken();
-    console.log('token fetched');
-    console.log(COGNITO_CONFIG.ACCESS_TOKEN)
-    fetchReportData();
-    fetchOrchards();
-    fetchVarieties();
-  }
+  
   function onLoadHandler(data) {
     setIsLoggedIn(data)
     let str = window.location.href; 
@@ -42,12 +34,9 @@ function App() {
     }
    
   }
-  
-  
- 
   return (
     <div className="App">
-        <HeaderBar></HeaderBar>
+        <HeaderBar isLoggedIn={isLoggedIn} UserFullName={`${UserInfo.give_name} ${UserInfo.family_name}`}></HeaderBar>
         <MenuBar></MenuBar>
         <Routes>
           <Route exact path={"/chemical" || "/"}  element={<ChemicalPageContent 

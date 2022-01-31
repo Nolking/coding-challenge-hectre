@@ -1,4 +1,5 @@
 let ReportData = []
 let OrchardList = []
 let VarietyList = []
-export {ReportData, OrchardList, VarietyList};
+let UserInfo = {}
+export {ReportData, OrchardList, VarietyList, UserInfo};

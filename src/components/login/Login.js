@@ -14,20 +14,13 @@ export default function LoginPageContent(props) {
         setIsLoggedIn(props.isLoggedIn)
         onLoad(isLoggedIn)
     }, [isLoggedIn, props])
-    const logout_url="/signout"
-    const logOutHandler = () => {
-        setIsLoggedIn(false);
-        COGNITO_CONFIG.AUTHORIZATION_CODE = '';
-        console.log('You are logged out!')
-    }
-    
     
     return (
         <div className="main-page-content">
             <Card className="login-page-card" >
                 <Card type="inner">
                     <h1>{props.content}</h1>
-                    {isLoggedIn ? <NavLink to={logout_url} onClick={logOutHandler} >Sign out</NavLink>:<a href={COGNITO_CONFIG.SIGNIN_URL}>Sign in</a>}
+                    {isLoggedIn ? <a href={COGNITO_CONFIG.SIGNOUT_URL} >Sign out</a>:<a href={COGNITO_CONFIG.SIGNIN_URL}>Sign in</a>}
                     <div><NavLink to="/">Back to Home page</NavLink></div>
                 </Card>
             </Card>

@@ -1,6 +1,6 @@
 
 import COGNITO_CONFIG from "../configs/configs";
-import {ReportData, OrchardList, VarietyList } from "../data/TestData";
+import {ReportData, OrchardList, VarietyList, UserInfo } from "../data/TestData";
 export default function fetchChemical(dataContent) {
     fetch('https://develop-spectre-data.hectre.com/api/chemicals', {
         method: 'GET',
@@ -30,8 +30,8 @@ export default function fetchChemical(dataContent) {
         }
         });
 }
-export  function fetchAccessToken() {
-     fetch('https://hectre-code-challenge.auth.ap-southeast-2.amazoncognito.com/oauth2/token', {
+export async function fetchAccessToken() {
+     await fetch('https://hectre-code-challenge.auth.ap-southeast-2.amazoncognito.com/oauth2/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -45,12 +45,15 @@ export  function fetchAccessToken() {
                 COGNITO_CONFIG.ACCESS_TOKEN = data.access_token;
                 console.log(COGNITO_CONFIG.AUTHORIZATION_CODE)
                 console.log('token fetched apifetch')
+                console.log(COGNITO_CONFIG.ACCESS_TOKEN)
+                fetchReportData();
+                fetchOrchards();
+                fetchVarieties();
+                fetchUserInfo();
             })
           } else {
               res.json().then((data) => {
                   console.log(data)
-            //   let errorMessage = 'fetch failed';
-            //   console.log(errorMessage);
               console.log(data)
             })
           }
@@ -145,4 +148,32 @@ export function fetchVarieties() {
           })
         }
         });
+}
+export function fetchUserInfo() {
+  fetch('https://hectre-code-challenge.auth.ap-southeast-2.amazoncognito.com/oauth2/userInfo', {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+ COGNITO_CONFIG.ACCESS_TOKEN
+      }
+      }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+            console.log(data);
+            UserInfo.email = data.email;
+            UserInfo.email_verified = data.email_verified;
+            UserInfo.family_name = data.family_name;
+            UserInfo.given_name = data.given_name;
+            UserInfo.username = data.username;
+            console.log('user here')
+            console.log(UserInfo);
+        })
+      } else {
+          res.json().then((data) => {
+          let errorMessage = 'fetch failed';
+          console.log(errorMessage);
+          console.log(data)
+        })
+      }
+      });
 }
